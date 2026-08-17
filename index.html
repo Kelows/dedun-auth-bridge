@@ -15,7 +15,14 @@
 	// query string straight back to the app via its own URL scheme,
 	// which the OS (or expo-web-browser's openAuthSessionAsync) picks
 	// up from inside a mobile browser. No data is stored or logged here.
-	window.location.replace('dedun://auth/callback' + window.location.search);
+	//
+	// TEMPORARY, network-specific: while testing via Expo Go (not a
+	// standalone build), the app's deep link is exp://<lan-ip>:8081/--/…,
+	// not the dedun:// custom scheme — Expo Go can't register that until
+	// there's a standalone/dev-client build. This IP is only valid on
+	// the developer's current network; update it if it changes, or
+	// switch back to 'dedun://auth/callback' once building standalone.
+	window.location.replace('exp://192.168.1.186:8081/--/auth/callback' + window.location.search);
 </script>
 </body>
 </html>
