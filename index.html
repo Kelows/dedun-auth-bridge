@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dedun</title>
+</head>
+<body>
+<p>Redirecting back to Dedun…</p>
+<script>
+	// Enable Banking (and most PSD2 aggregators) only accept https://
+	// redirect_url values — they won't take a custom app scheme
+	// directly. This page is the bridge: it's the https:// URL
+	// registered with the provider, and its only job is to hand the
+	// query string straight back to the app via its own URL scheme,
+	// which the OS (or expo-web-browser's openAuthSessionAsync) picks
+	// up from inside a mobile browser. No data is stored or logged here.
+	window.location.replace('dedun://auth/callback' + window.location.search);
+</script>
+</body>
+</html>
