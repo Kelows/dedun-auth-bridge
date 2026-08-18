@@ -16,13 +16,21 @@
 	// which the OS (or expo-web-browser's openAuthSessionAsync) picks
 	// up from inside a mobile browser. No data is stored or logged here.
 	//
-	// TEMPORARY, network-specific: while testing via Expo Go (not a
-	// standalone build), the app's deep link is exp://<lan-ip>:8081/--/…,
-	// not the dedun:// custom scheme — Expo Go can't register that until
-	// there's a standalone/dev-client build. This IP is only valid on
-	// the developer's current network; update it if it changes, or
-	// switch back to 'dedun://auth/callback' once building standalone.
-	window.location.replace('exp://192.168.1.186:8081/--/auth/callback' + window.location.search);
+	// TEMPORARY, session-specific: while testing via Expo Go (not a
+	// standalone build), the app's deep link is exp://<host>/--/…, not
+	// the dedun:// custom scheme — Expo Go can't register that until
+	// there's a standalone/dev-client build. Running `expo start
+	// --tunnel` (needed since plain LAN mode hit connectivity issues —
+	// see CLAUDE.md), so <host> is the tunnel host, not a LAN IP.
+	// That host is derived from the `urlRandomness` value persisted in
+	// finance-app/.expo/settings.json, so it stays stable across restarts
+	// on this machine — but it WILL change on a fresh checkout, a
+	// different dev machine, or if that file is ever deleted. If the
+	// redirect starts failing with "failed to fetch remote update"
+	// again, that file's value (and this URL) are the first thing to
+	// check — switch back to 'dedun://auth/callback' once building
+	// standalone, which sidesteps this permanently.
+	window.location.replace('exp://luntjii-anonymous-8081.exp.direct/--/auth/callback' + window.location.search);
 </script>
 </body>
 </html>
