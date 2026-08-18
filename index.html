@@ -16,21 +16,20 @@
 	// which the OS (or expo-web-browser's openAuthSessionAsync) picks
 	// up from inside a mobile browser. No data is stored or logged here.
 	//
-	// TEMPORARY, session-specific: while testing via Expo Go (not a
-	// standalone build), the app's deep link is exp://<host>/--/…, not
-	// the dedun:// custom scheme — Expo Go can't register that until
-	// there's a standalone/dev-client build. Running `expo start
-	// --tunnel` (needed since plain LAN mode hit connectivity issues —
-	// see CLAUDE.md), so <host> is the tunnel host, not a LAN IP.
-	// That host is derived from the `urlRandomness` value persisted in
-	// finance-app/.expo/settings.json, so it stays stable across restarts
-	// on this machine — but it WILL change on a fresh checkout, a
-	// different dev machine, or if that file is ever deleted. If the
-	// redirect starts failing with "failed to fetch remote update"
-	// again, that file's value (and this URL) are the first thing to
-	// check — switch back to 'dedun://auth/callback' once building
-	// standalone, which sidesteps this permanently.
-	window.location.replace('exp://luntjii-anonymous-8081.exp.direct/--/auth/callback' + window.location.search);
+	// TEMPORARY: while testing via Expo Go (not a standalone build), the
+	// app's deep link is exp://<host>/--/…, not the dedun:// custom
+	// scheme — Expo Go can't register that until there's a standalone/
+	// dev-client build. <host> is one-choice-raptor.ngrok-free.app, a
+	// reserved ngrok domain manually tunneled to Metro on :8081 (this
+	// is the SAME reserved domain used for the Enable Banking signing
+	// server on :3001 — an ngrok Traffic Policy on that tunnel routes
+	// /sign-jwt to the signing server and everything else to Metro; see
+	// dedun-signing-server/traffic-policy.yml and CLAUDE.md "Enable
+	// Banking"). Because it's a reserved domain rather than Expo's own
+	// ephemeral --tunnel host, this URL shouldn't need updating again —
+	// switch to 'dedun://auth/callback' once building standalone, which
+	// sidesteps needing any of this.
+	window.location.replace('exp://one-choice-raptor.ngrok-free.app/--/auth/callback' + window.location.search);
 </script>
 </body>
 </html>
